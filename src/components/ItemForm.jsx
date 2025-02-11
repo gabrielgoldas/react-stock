@@ -7,8 +7,6 @@ ItemForm.propTypes = {
   itemToUpdate: PropTypes.object
 }
 
-
-
 export default function ItemForm({ itemToUpdate }) {
   const defaultItem = {
     name: "",
