@@ -30,6 +30,10 @@ export default function StockContextProvider({ children }) {
     })
   }
 
+  const getItem = (itemId) => {
+    return items.find(item => item.id === +itemId)
+  }
+
   const deleteItem = (itemId) => {
     setItems(currentState => {
       const updatedItems = currentState.filter(item => item.id !== itemId)
@@ -38,13 +42,25 @@ export default function StockContextProvider({ children }) {
     })
   }
 
+  const updateItem = (itemId, newAttributes) => {
+    setItems(currentState => {
+      const itemIndex = currentState.findIndex(item => item.id === +itemId)
+      const updatedItems = [...currentState]
+      Object.assign(updatedItems[itemIndex], newAttributes, { updatedAt: new Date() })
+      localStorage.setItem('gg-react-stock', JSON.stringify(updatedItems))
+      return updatedItems
+    })
+  }
+
   const stock = {
-    items, 
+    items,
     addItem,
+    getItem,
+    updateItem,
     deleteItem
   }
 
-  return(
+  return (
     <StockContext.Provider value={stock}>
       {children}
     </StockContext.Provider>
